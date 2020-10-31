@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "kpi".
@@ -16,6 +14,16 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_by
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property int $weight_on_objective
+ * @property string|null $achievement
+ * @property int|null $mid_year_status
+ * @property string|null $appraisee_mid_year_performance_comment
+ * @property string|null $supervisor_mid_year_performance_comment
+ * @property int|null $self_rating
+ * @property int|null $agreed_rating
+ * @property string|null $appraisee_end_year_performance_comment
+ * @property string|null $supervisor_end_year_performance_comment
+ * @property float|null $weighted_score
  *
  * @property Objective $objective
  */
@@ -29,23 +37,16 @@ class Kpi extends \yii\db\ActiveRecord
         return 'kpi';
     }
 
-    public function behaviors()
-    {
-        return [
-            BlameableBehavior::class,
-            TimestampBehavior::class
-        ];
-    }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['objectiveid', 'kpi'], 'required'],
-            [['objectiveid', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
-            [['kpi'], 'string'],
+            [['objectiveid', 'kpi', 'weight_on_objective'], 'required'],
+            [['objectiveid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight_on_objective', 'mid_year_status', 'self_rating', 'agreed_rating'], 'integer'],
+            [['kpi', 'achievement', 'appraisee_mid_year_performance_comment', 'supervisor_mid_year_performance_comment', 'appraisee_end_year_performance_comment', 'supervisor_end_year_performance_comment'], 'string'],
+            [['weighted_score'], 'number'],
             [['objectiveid'], 'exist', 'skipOnError' => true, 'targetClass' => Objective::className(), 'targetAttribute' => ['objectiveid' => 'id']],
         ];
     }
@@ -63,6 +64,16 @@ class Kpi extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'weight_on_objective' => 'Weight On Objective',
+            'achievement' => 'Achievement',
+            'mid_year_status' => 'Mid Year Status',
+            'appraisee_mid_year_performance_comment' => 'Appraisee Mid Year Performance Comment',
+            'supervisor_mid_year_performance_comment' => 'Supervisor Mid Year Performance Comment',
+            'self_rating' => 'Self Rating',
+            'agreed_rating' => 'Agreed Rating',
+            'appraisee_end_year_performance_comment' => 'Appraisee End Year Performance Comment',
+            'supervisor_end_year_performance_comment' => 'Supervisor End Year Performance Comment',
+            'weighted_score' => 'Weighted Score',
         ];
     }
 

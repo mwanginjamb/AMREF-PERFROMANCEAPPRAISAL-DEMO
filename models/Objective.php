@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "objective".
@@ -16,6 +14,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_by
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property int $weight
+ * @property float $weighted_objective_score
  *
  * @property Kpi[] $kpis
  * @property Departmentgoal $departmentgoal
@@ -30,23 +30,16 @@ class Objective extends \yii\db\ActiveRecord
         return 'objective';
     }
 
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-            BlameableBehavior::class
-        ];
-    }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['departmentgoalid', 'objective'], 'required'],
-            [['departmentgoalid', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
+            [['departmentgoalid', 'objective', 'weight', 'weighted_objective_score'], 'required'],
+            [['departmentgoalid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight'], 'integer'],
             [['objective'], 'string'],
+            [['weighted_objective_score'], 'number'],
             [['departmentgoalid'], 'exist', 'skipOnError' => true, 'targetClass' => Departmentgoal::className(), 'targetAttribute' => ['departmentgoalid' => 'id']],
         ];
     }
@@ -64,6 +57,8 @@ class Objective extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'weight' => 'Weight',
+            'weighted_objective_score' => 'Weighted Objective Score',
         ];
     }
 
