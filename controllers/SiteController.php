@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
 use app\models\VerifyEmailForm;
-use frontend\models\PasswordResetRequestForm;
+use app\models\PasswordResetRequestForm;
 use Psr\Log\InvalidArgumentException;
 use Yii;
 use yii\base\InvalidParamException;
@@ -29,10 +29,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','index'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -41,7 +41,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    //'logout' => ['post'],
                 ],
             ],
         ];
@@ -80,6 +80,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -146,8 +147,7 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                //print '<pre>';
-                //print_r($user); exit;
+
                 /*Do not auto login user*/
                 //if (Yii::$app->getUser()->login($user)) {
                 return $this->goHome();

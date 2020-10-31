@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models;
+namespace app\models;
 
 use app\models\VerifyEmailForm;
 use Yii;

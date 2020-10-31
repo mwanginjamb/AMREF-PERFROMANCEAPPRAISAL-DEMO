@@ -45,6 +45,7 @@ class Department extends \yii\db\ActiveRecord
     {
         return [
             [['department'], 'required'],
+            [['department'], 'unique'],
             [['updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
             [['department'], 'string', 'max' => 255],
         ];

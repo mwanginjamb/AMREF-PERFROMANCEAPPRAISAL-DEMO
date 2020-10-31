@@ -28,6 +28,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="<?= \yii\helpers\Url::to('/images/fav.png')?>" sizes="32x32" />
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -181,7 +182,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
 
                         <div class="dropdown-divider"></div>
 
-                        <?= Html::a('<i class="fas fa-user"></i> Profile',['./employee'],['class'=> 'dropdown-item']); ?>
+                        <?= (!Yii::$app->user->isGuest)?Html::a('<i class="fas fa-user"></i> Profile',['./employee'],['class'=> 'dropdown-item']):''; ?>
 
 
                     </div>
@@ -201,7 +202,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
             <a href="<?= $absoluteUrl ?>site" class="brand-link">
                 <!--<img src="<?= $webroot ?>/images/Logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                      style="opacity: .8">-->
-                <span class="brand-text font-weight-light"><?= Yii::$app->name; ?></span>
+                <span class="brand-text font-weight-light"><?= Yii::$app->name ?></span>
             </a>
 
             <!-- Sidebar -->
@@ -212,7 +213,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                         <img src="https://via.placeholder.com/160/cccccc/FFFFFF/?text=user" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Name</a>
+                        <a href="#" class="d-block"><?= (!Yii::$app->user->isGuest)?Yii::$app->user->identity->username:'' ?></a>
                     </div>
                 </div>
 
@@ -261,24 +262,24 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                             <ul class="nav nav-treeview">
 
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>leave/create" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','create')?'active':'' ?> ">
-                                        <i class="fa fa-running nav-icon"></i>
-                                        <p>New Leave Application</p>
+                                    <a href="<?= $absoluteUrl ?>department" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','create')?'active':'' ?> ">
+                                        <i class="fa fa-building"></i>
+                                        <p>Departments</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>leave/" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>appraisal-status" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','index')?'active':'' ?>">
                                         <i class="fa fa-door-open nav-icon"></i>
-                                        <p>Leave List</p>
+                                        <p>Appraisal Statuses</p>
                                     </a>
                                 </li>
 
     
 
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>leavestatement/index" class="nav-link <?= Yii::$app->recruitment->currentaction('leavestatement','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>objective-setting-status" class="nav-link <?= Yii::$app->recruitment->currentaction('leavestatement','index')?'active':'' ?>">
                                         <i class="fa fa-file-pdf nav-icon"></i>
-                                        <p>Leave Statement  Report</p>
+                                        <p>Objective Setting Statuses</p>
                                     </a>
                                 </li>
 

@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Create Department';
 $this->params['breadcrumbs'][] = ['label' => 'Departments', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Add Department', 'url' => ['create']];
 ?>
 <div class="department-create">
 
