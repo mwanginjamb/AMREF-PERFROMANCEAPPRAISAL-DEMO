@@ -11,10 +11,19 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="objective-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><?= Html::encode($this->title) ?></h3>
+        </div>
+        <div class="card-body">
+            <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </div>
+
+
+
 
 </div>

@@ -101,6 +101,12 @@ class Employee extends \yii\db\ActiveRecord
         return $this->hasOne(Department::className(), ['id' => 'departmentid']);
     }
 
+    public function getSupervisor()
+    {
+
+        return Employee::find()->select(["CONCAT(firstname,' ',middlename,' ',lastname) as name"])->where(['employee_no' => $this->supervisor_id])->asArray()->one();
+    }
+
     /**
      * Gets query for [[User]].
      *

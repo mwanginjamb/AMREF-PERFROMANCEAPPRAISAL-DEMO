@@ -54,6 +54,7 @@ class Kpi extends \yii\db\ActiveRecord
     {
         return [
             [['objectiveid', 'kpi', 'weight_on_objective'], 'required'],
+            ['kpi','unique'],
             [['objectiveid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight_on_objective', 'mid_year_status', 'self_rating', 'agreed_rating'], 'integer'],
             [['kpi', 'achievement', 'appraisee_mid_year_performance_comment', 'supervisor_mid_year_performance_comment', 'appraisee_end_year_performance_comment', 'supervisor_end_year_performance_comment'], 'string'],
             [['weighted_score'], 'number'],

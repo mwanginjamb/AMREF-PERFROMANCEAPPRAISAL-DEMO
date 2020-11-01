@@ -66,8 +66,37 @@ class KpiController extends Controller
     {
         $model = new Kpi();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+
+
+            // Validate KPI count limit of 3
+
+            $count = Kpi::find()->where(['objectiveid' => Yii::$app->request->get('objectiveid') ])->count();
+
+            if($count >= 3){
+                return ['note' => '<div class="alert alert-info">You are only allowed to set a maximum of 3 KPIs Per Objectives. </div>'];
+                exit;
+            }
+
+
+
+
+            $model->objectiveid = Yii::$app->request->get('objectiveid');
+            if($model->save())
+            {
+                return ['note' => '<div class="alert alert-success">Employee Objective KPI Added Successfully. </div>'];
+            }else{
+                // return $model->getErrors();
+                return ['note' => '<div class="alert alert-error">Error Adding Employee  Objective KPI. </div>'];
+            }
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
         }
 
         return $this->render('create', [
@@ -104,9 +133,12 @@ class KpiController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if($this->findModel($id)->delete()){
+            return ['note' => '<div class="alert alert-success">Record Purged Successfully</div>'];
+        }else{
+            return ['note' => '<div class="alert alert-danger">Error Purging Record.</div>' ];
+        }
     }
 
     /**

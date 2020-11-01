@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Appraisalcalendar;
 use app\models\Department;
+use app\models\Employee;
 use Yii;
 use app\models\Initializedappraisals;
 use app\models\InitializedappraisalsSearch;
@@ -73,9 +74,10 @@ class InitializedappraisalsController extends Controller
         $appraisalCalendar = ArrayHelper::map(Appraisalcalendar::find()->all(),'id','calendar_year_description');
 
         if ($model->load(Yii::$app->request->post()) ) {
+
             if($model->save()){
                 Yii::$app->session->setFlash('success','Appraisal Initialized Successfully.', true);
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }else{
                 Yii::$app->recruitment->printrr($model->getErrors());
             }

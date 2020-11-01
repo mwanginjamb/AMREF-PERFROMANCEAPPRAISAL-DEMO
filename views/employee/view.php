@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Employee', 'url' => ['view','id' =
             'passportno',
             'krapin',
             'userid',
+            'supervisor.name',
             'updated_by',
             'created_by',
             'created_at',

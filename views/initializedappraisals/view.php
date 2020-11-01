@@ -36,12 +36,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Initialized Appraisal', 'url' => [
         'model' => $model,
         'attributes' => [
             'id',
-            'appraisalcalendarid',
-            'departmentid',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            'appraisalcalendar.calendar_year_description',
+            'department.department',
+            //'created_by',
+            //'updated_by',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

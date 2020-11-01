@@ -18,6 +18,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $updated_at
  * @property int $weight
  * @property float $weighted_objective_score
+ * @property float $employee_no
+ * @property float $appraisal_id
  *
  * @property Kpi[] $kpis
  * @property Departmentgoal $departmentgoal
@@ -46,11 +48,12 @@ class Objective extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['departmentgoalid', 'objective', 'weight', 'weighted_objective_score'], 'required'],
-            [['departmentgoalid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight'], 'integer'],
-            [['objective'], 'string'],
+            [['departmentgoalid', 'objective', 'weight'], 'required'],
+            ['objective','unique'],
+            [['departmentgoalid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight','appraisal_id'], 'integer'],
+            [['objective','employee_no'], 'string'],
             [['weighted_objective_score'], 'number'],
-            [['departmentgoalid'], 'exist', 'skipOnError' => true, 'targetClass' => Departmentgoal::className(), 'targetAttribute' => ['departmentgoalid' => 'id']],
+            //[['departmentgoalid'], 'exist', 'skipOnError' => true, 'targetClass' => Departmentgoal::className(), 'targetAttribute' => ['departmentgoalid' => 'id']],
         ];
     }
 
@@ -61,7 +64,7 @@ class Objective extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'departmentgoalid' => 'Departmentgoalid',
+            'departmentgoalid' => 'Department Goal',
             'objective' => 'Objective',
             'updated_by' => 'Updated By',
             'created_by' => 'Created By',

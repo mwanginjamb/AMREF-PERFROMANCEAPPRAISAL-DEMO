@@ -66,8 +66,39 @@ class ObjectiveController extends Controller
     {
         $model = new Objective();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+
+        if ($model->load(Yii::$app->request->post()) && Yii::$app->request->get('dgid')) {
+            /*return $this->redirect(['view', 'id' => $model->id]);*/
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+
+
+            // Validate Count
+
+            $count = Objective::find()->where(['departmentgoalid' => Yii::$app->request->get('dgid'),'employee_no' => Yii::$app->request->get('Employee_No'), 'appraisal_id' => Yii::$app->request->get('appraisal_Id') ])->count();
+
+            if($count >= 5){
+                return ['note' => '<div class="alert alert-info">You are only allowed to set a maximum of 5 main objectives. </div>'];
+                exit;
+            }
+
+            $model->departmentgoalid = Yii::$app->request->get('dgid');
+            $model->employee_no = Yii::$app->request->get('Employee_No');
+            $model->appraisal_id = Yii::$app->request->get('appraisal_Id');
+            if($model->save())
+            {
+                return ['note' => '<div class="alert alert-success">Employee Objective Added Successfully. </div>'];
+            }else{
+               // return $model->getErrors();
+                return ['note' => '<div class="alert alert-success">Error Adding Employee Objective. </div>'];
+            }
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
         }
 
         return $this->render('create', [
@@ -104,9 +135,13 @@ class ObjectiveController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if($this->findModel($id)->delete()){
+            return ['note' => '<div class="alert alert-success">Record Purged Successfully</div>'];
+        }else{
+            return ['note' => '<div class="alert alert-danger">Error Purging Record.</div>' ];
+        }
     }
 
     /**

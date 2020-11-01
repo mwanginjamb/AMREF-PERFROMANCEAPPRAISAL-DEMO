@@ -95,6 +95,7 @@ class Departmentgoal extends \yii\db\ActiveRecord
         return $this->hasOne(Department::className(), ['id' => 'departmentid']);
     }
 
+
     /**
      * Gets query for [[OrganizationGoal]].
      *
@@ -112,7 +113,7 @@ class Departmentgoal extends \yii\db\ActiveRecord
      */
     public function getObjectives()
     {
-        return $this->hasMany(Objective::className(), ['departmentgoalid' => 'id']);
+        return $this->hasMany(Objective::class, ['departmentgoalid' => 'id']);
     }
 
     /**

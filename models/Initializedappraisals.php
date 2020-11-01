@@ -53,15 +53,7 @@ class Initializedappraisals extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['appraisalcalendarid', 'departmentid', 'employee_no'], 'required'],
-            [['appraisalcalendarid', 'departmentid', 'created_by', 'updated_by', 'created_at', 'updated_at', 'objective_setting_status_id', 'my_status_id', 'ey_status_id'], 'integer'],
-            [['employee_no', 'supervisor_no'], 'string', 'max' => 255],
-            [['appraisalcalendarid'], 'exist', 'skipOnError' => true, 'targetClass' => Appraisalcalendar::className(), 'targetAttribute' => ['appraisalcalendarid' => 'id']],
-            [['departmentid'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['departmentid' => 'id']],
-            [['ey_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => AppraisalStatus::className(), 'targetAttribute' => ['ey_status_id' => 'id']],
-            [['my_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => AppraisalStatus::className(), 'targetAttribute' => ['my_status_id' => 'id']],
-            [['objective_setting_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => ObjectiveSettingStatus::className(), 'targetAttribute' => ['objective_setting_status_id' => 'id']],
-            [['supervisor_no'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['supervisor_no' => 'id']],
+            [['appraisalcalendarid', 'departmentid'], 'required'],
         ];
     }
 
@@ -78,11 +70,7 @@ class Initializedappraisals extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'employee_no' => 'Employee No',
-            'objective_setting_status_id' => 'Objective Setting Status ID',
-            'my_status_id' => 'My Status ID',
-            'ey_status_id' => 'Ey Status ID',
-            'supervisor_no' => 'Supervisor No',
+
         ];
     }
 
@@ -143,7 +131,7 @@ class Initializedappraisals extends \yii\db\ActiveRecord
      */
     public function getSupervisorNo()
     {
-        return $this->hasOne(Employee::className(), ['id' => 'supervisor_no']);
+        return $this->hasOne(Employee::className(), ['employee_no' => 'supervisor_no']);
     }
 
     /**
@@ -153,5 +141,33 @@ class Initializedappraisals extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\InitializedappraisalsQuery(get_called_class());
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        if($insert)
+        {
+
+            $Employees = Employee::find()->where(['departmentid' => $this->departmentid])->all();
+
+            //Yii::$app->recruitment->printrr($Employees);
+            $errors = [];
+            foreach($Employees as $emp){
+                $model = new Appraisalheader();
+                // Populate Appraisal Header
+                $model->employee_no = $emp->employee_no;
+                $model->supervisor_no = $emp->supervisor_id;
+                $model->initialization_id = $this->id;
+                if(!$model->save()){
+                    $errors[] = $model->getErrors();
+                }
+            }
+
+            if(count($errors)){
+                Yii::$app->recruitment->printrr($errors);
+            }else{
+                Yii::$app->session->setFlash('success','Appraisal Initialized successfully for employees.', true);
+            }
+        }
     }
 }

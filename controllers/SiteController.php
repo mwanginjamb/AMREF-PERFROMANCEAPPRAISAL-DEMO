@@ -2,6 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Appraisalheader;
+use app\models\AppraisalStatus;
+use app\models\Midyearperformancelevels;
+use app\models\ObjectiveSettingStatus;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
 use app\models\VerifyEmailForm;
@@ -10,6 +14,8 @@ use Psr\Log\InvalidArgumentException;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Response;
@@ -29,10 +35,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','index'],
+                'only' => ['logout','index','list','appraisal'],
                 'rules' => [
                     [
-                        'actions' => ['logout','index'],
+                        'actions' => ['logout','index','list','appraisal'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -252,4 +258,51 @@ class SiteController extends Controller
         Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
         return $this->goHome();
     }
+
+    // List Appraisals
+
+    public function actionList()
+    {
+        //get Employee Details
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $employee = Yii::$app->user->identity->employee;
+
+        // Get Appraisal Header
+
+        $Appraisals = Appraisalheader::find()->where(['employee_no' => $employee->employee_no ])->all();
+        $count = 0;
+        $result = [];
+        foreach($Appraisals as $app)
+        {
+            $link = Html::a('View <i class="fa fa-eye"></i>', ['appraisal','app' => $app->id],['class' => 'btn btn-xs btn-success']);
+            ++$count;
+            $result['data'][] = [
+                    'id' => $count,
+                    'calendar' => $app->initialization->appraisalcalendar->calendar_year_description,
+                    'Employee_no' => $app->employee_no,
+                    'Department' => $app->initialization->department->department,
+                    'link' => $link
+            ];
+        }
+
+        return $result;
+    }
+
+    // Appraisal Card
+
+    public function actionAppraisal($app)
+    {
+        $model = Appraisalheader::find()->where(['id' => $app])->one();
+        $objectiveSettingStatus = ArrayHelper::map(ObjectiveSettingStatus::find()->all(),'id','status');
+        $appraisalStatus = ArrayHelper::map(AppraisalStatus::find()->all(),'id','status');
+        $myPls = ArrayHelper::map(Midyearperformancelevels::find()->all(),'id','level');
+        return $this->render('appraisal',[
+            'model' => $model,
+            'objectiveSettingStatus' => $objectiveSettingStatus,
+            'appraisalStatus' => $appraisalStatus,
+            'myPls' => $myPls
+        ]);
+    }
+
+
 }

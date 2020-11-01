@@ -14,7 +14,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Initializedappraisals', 'url' => [
 <div class="initializedappraisals-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php if(Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success alert-dismissable"><?= Yii::$app->session->getFlash('success') ?></div>
+    <?php endif; ?>
     <p>
         <?= Html::a('Initialize an Appraisal', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -27,9 +29,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Initializedappraisals', 'url' => [
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'appraisalcalendarid',
-            'departmentid',
+            //'id',
+            'appraisalcalendar.calendar_year_description',
+            'department.department',
             //'created_by',
             //'updated_by',
             //'created_at',
