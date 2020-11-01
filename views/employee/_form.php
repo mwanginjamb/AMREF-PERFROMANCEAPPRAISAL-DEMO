@@ -12,39 +12,63 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
+    <?php $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'firstname')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-6">
 
-    <?= $form->field($model, 'middlename')->textInput(['maxlength' => true]) ?>
+            <div class="row">
+                <div class="col-md-4">
+                    <?= $form->field($model, 'firstname')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'middlename')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
 
-    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'cell')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'employee_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'departmentid')->textInput() ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nhif')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'cell')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nssf')->textInput(['maxlength' => true]) ?>
+            <?php $form->field($model, 'employee_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'passportno')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'departmentid')->dropDownList($departments,['prompt' => 'Select Department ..','required' =>  true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'userid')->dropDownList($users,['prompt' => 'Select Users','required' => true]) ?>
 
-    <?= $form->field($model, 'krapin')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'nhif')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'userid')->textInput() ?>
+            <?= $form->field($model, 'nssf')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+            <?= $form->field($model, 'passportno')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
+            <?= $form->field($model, 'krapin')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+            <?= $form->field($model, 'supervisor_id')->dropDownList($employees,['prompt' => 'Select Supervisor ..','required' =>  true]) ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+
+
+        </div>
+    </div>
+
+
+
+
+    <?php $form->field($model, 'updated_by')->textInput() ?>
+
+    <?php $form->field($model, 'created_by')->textInput() ?>
+
+    <?php $form->field($model, 'created_at')->textInput() ?>
+
+    <?php $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

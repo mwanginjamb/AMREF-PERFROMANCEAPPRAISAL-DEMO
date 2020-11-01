@@ -76,6 +76,7 @@ class Department extends \yii\db\ActiveRecord
         return $this->hasMany(Departmentgoal::className(), ['departmentid' => 'id']);
     }
 
+
     /**
      * Gets query for [[Employees]].
      *

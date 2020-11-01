@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use Mpdf\Tag\Time;
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "midyearperformancelevels".
@@ -22,6 +25,14 @@ class Midyearperformancelevels extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'midyearperformancelevels';
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            BlameableBehavior::class
+        ];
     }
 
     /**

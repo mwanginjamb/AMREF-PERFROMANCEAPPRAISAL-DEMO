@@ -2,9 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Appraisalcalendar;
+use app\models\Department;
+use app\models\Organizationalgoal;
 use Yii;
 use app\models\Departmentgoal;
 use app\models\DepartmentgoalSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,12 +70,24 @@ class DepartmentgoalController extends Controller
     {
         $model = new Departmentgoal();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $departments = ArrayHelper::map(Department::find()->all(),'id','department');
+        $organizationalGoals = ArrayHelper::map(Organizationalgoal::find()->all(),'id','goal');
+        $appraisalCalendar = ArrayHelper::map(Appraisalcalendar::find()->all(),'id','calendar_year_description');
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Department Goal Created Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'departments' => $departments,
+            'organizationalGoals' => $organizationalGoals,
+            'appraisalCalendar' => $appraisalCalendar
         ]);
     }
 
@@ -85,13 +101,24 @@ class DepartmentgoalController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $departments = ArrayHelper::map(Department::find()->all(),'id','department');
+        $organizationalGoals = ArrayHelper::map(Organizationalgoal::find()->all(),'id','goal');
+        $appraisalCalendar = ArrayHelper::map(Appraisalcalendar::find()->all(),'id','calendar_year_description');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Department Goal Updated Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'departments' => $departments,
+            'organizationalGoals' => $organizationalGoals,
+            'appraisalCalendar' => $appraisalCalendar
         ]);
     }
 

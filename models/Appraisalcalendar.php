@@ -50,7 +50,8 @@ class Appraisalcalendar extends \yii\db\ActiveRecord
     {
         return [
             [['yearstart', 'yearend', 'calendar_year_description'], 'required'],
-            [['yearstart', 'yearend', 'mid_year_start', 'mid_year_end', 'end_year_start', 'end_year_end', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
+            [['updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
+            [['yearstart', 'yearend', 'mid_year_start', 'mid_year_end', 'end_year_start', 'end_year_end'],'safe'],
             [['calendar_year_description'], 'string'],
         ];
     }
@@ -62,8 +63,8 @@ class Appraisalcalendar extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'yearstart' => 'Yearstart',
-            'yearend' => 'Yearend',
+            'yearstart' => 'Year Start',
+            'yearend' => 'Year End',
             'calendar_year_description' => 'Calendar Year Description',
             'mid_year_start' => 'Mid Year Start',
             'mid_year_end' => 'Mid Year End',

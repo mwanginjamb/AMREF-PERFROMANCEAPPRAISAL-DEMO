@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AppraisalcalendarSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Appraisalcalendars';
+$this->title = 'Appraisal Calendars';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="appraisalcalendar-index">
@@ -26,20 +26,45 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'yearstart',
-            'yearend',
+            //'id',
             'calendar_year_description:ntext',
-            'mid_year_start',
-            //'mid_year_end',
-            //'end_year_start',
-            //'end_year_end',
+            'yearstart:datetime',
+            'yearend:datetime',
+            'mid_year_start:datetime',
+            //'mid_year_end:datetime',
+            'end_year_start:datetime',
+           // 'end_year_end:datetime',
             //'updated_by',
             //'created_by',
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+
+                'buttons' => [
+                    'view' => function($url){
+                        return Html::a('<i class="fa fa-eye"></i>', $url);
+                    },
+                    'update' => function($url){
+                        return Html::a('<i class="fa fa-edit"></i>', $url);
+                    },
+                    'delete' => function( $url )
+                    {
+                        return Html::a('<i class="fa fa-trash"></i>', $url,[
+
+                            'data' => [
+                                'confirm' => 'Are you sure you wanna delete this record?',
+                                'method' => 'POST',
+                                'params' => [
+                                    '_csrf' => Yii::$app->request->csrfToken
+                                ]
+
+                            ]
+                        ]);
+                    }
+                ],
+
+                ],
         ],
     ]); ?>
 

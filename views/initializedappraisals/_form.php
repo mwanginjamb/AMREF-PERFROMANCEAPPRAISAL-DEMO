@@ -12,17 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'appraisalcalendarid')->textInput() ?>
+    <?= $form->field($model, 'appraisalcalendarid')->dropDownList($appraisalCalendar, ['prompt' => 'Select ...']) ?>
 
-    <?= $form->field($model, 'departmentid')->textInput() ?>
+    <?= $form->field($model, 'departmentid')->dropDownList($departments,['prompt' => 'Select ...']) ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
+    <?php $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?php $form->field($model, 'updated_by')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?php $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?php $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

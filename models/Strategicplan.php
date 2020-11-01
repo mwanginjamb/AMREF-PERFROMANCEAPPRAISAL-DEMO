@@ -45,7 +45,8 @@ class Strategicplan extends \yii\db\ActiveRecord
     {
         return [
             [['start_year', 'end_year', 'strategicplan_description'], 'required'],
-            [['start_year', 'end_year', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
+            [['updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
+            [['start_year', 'end_year'],'safe'],
             [['strategicplan_description'], 'string'],
         ];
     }

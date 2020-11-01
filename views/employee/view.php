@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Employee', 'url' => ['view','id' => $model->id]];
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="employee-view">
@@ -17,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Add Employee', ['create'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('View All', ['index'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -36,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'cell',
             'employee_no',
-            'departmentid',
+            'department.department',
             'nhif',
             'nssf',
             'passportno',

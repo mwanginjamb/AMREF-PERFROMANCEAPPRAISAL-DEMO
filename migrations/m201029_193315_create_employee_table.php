@@ -27,7 +27,6 @@ class m201029_193315_create_employee_table extends Migration
             'departmentid' => $this->integer(),
             'nhif' => $this->string(),
             'nssf' => $this->string(),
-            'id' => $this->string(),
             'passportno' => $this->string(),
             'krapin' => $this->string(),
             'userid' => $this->integer(),

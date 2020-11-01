@@ -7,15 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\InitializedappraisalsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Initializedappraisals';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Initialized Appraisals';
+$this->params['breadcrumbs'][] = ['label' => 'Initializedappraisals', 'url' => ['index']];
+
 ?>
 <div class="initializedappraisals-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Initializedappraisals', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Initialize an Appraisal', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,12 +30,38 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'appraisalcalendarid',
             'departmentid',
-            'created_by',
-            'updated_by',
+            //'created_by',
+            //'updated_by',
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+
+
+                    'buttons' => [
+                        'view' => function($url){
+                            return Html::a('<i class="fa fa-eye"></i>', $url);
+                        },
+                        'update' => function($url){
+                            return Html::a('<i class="fa fa-edit"></i>', $url);
+                        },
+                        'delete' => function( $url )
+                        {
+                            return Html::a('<i class="fa fa-trash"></i>', $url,[
+
+                                'data' => [
+                                    'confirm' => 'Are you sure you wanna delete this record?',
+                                    'method' => 'POST',
+                                    'params' => [
+                                        '_csrf' => Yii::$app->request->csrfToken
+                                    ]
+
+                                ]
+                            ]);
+                        }
+                    ],
+
+                ],
         ],
     ]); ?>
 

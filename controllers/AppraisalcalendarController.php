@@ -66,8 +66,21 @@ class AppraisalcalendarController extends Controller
     {
         $model = new Appraisalcalendar();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            $model->yearstart = strtotime(Yii::$app->request->post()['Appraisalcalendar']['yearstart']);
+            $model->yearend = strtotime(Yii::$app->request->post()['Appraisalcalendar']['yearend']);
+            $model->mid_year_start = strtotime(Yii::$app->request->post()['Appraisalcalendar']['mid_year_start']);
+            $model->mid_year_end = strtotime(Yii::$app->request->post()['Appraisalcalendar']['mid_year_end']);
+            $model->end_year_start = strtotime(Yii::$app->request->post()['Appraisalcalendar']['end_year_start']);
+            $model->end_year_end = strtotime(Yii::$app->request->post()['Appraisalcalendar']['end_year_end']);
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Calendar Created Successfully', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
+
         }
 
         return $this->render('create', [
@@ -86,8 +99,19 @@ class AppraisalcalendarController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->yearstart = strtotime(Yii::$app->request->post()['Appraisalcalendar']['yearstart']);
+            $model->yearend = strtotime(Yii::$app->request->post()['Appraisalcalendar']['yearend']);
+            $model->mid_year_start = strtotime(Yii::$app->request->post()['Appraisalcalendar']['mid_year_start']);
+            $model->mid_year_end = strtotime(Yii::$app->request->post()['Appraisalcalendar']['mid_year_end']);
+            $model->end_year_start = strtotime(Yii::$app->request->post()['Appraisalcalendar']['end_year_start']);
+            $model->end_year_end = strtotime(Yii::$app->request->post()['Appraisalcalendar']['end_year_end']);
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Calendar Updated Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
         }
 
         return $this->render('update', [

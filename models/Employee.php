@@ -9,7 +9,7 @@ use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "employee".
  *
- * @property string $id
+ * @property int $id
  * @property string $firstname
  * @property string $middlename
  * @property string $lastname
@@ -54,10 +54,12 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'firstname', 'middlename', 'lastname', 'email', 'cell'], 'required'],
-            [['departmentid', 'userid', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
-            [['id', 'firstname', 'middlename', 'lastname', 'email', 'cell', 'employee_no', 'nhif', 'nssf', 'passportno', 'krapin'], 'string', 'max' => 255],
-            [['id'], 'unique'],
+            [['firstname', 'middlename', 'lastname', 'email', 'cell','id'], 'required'],
+            [['email','employee_no', 'nhif', 'nssf','passportno', 'krapin','id'], 'unique'],
+            [['departmentid', 'userid', 'updated_by', 'created_by', 'created_at', 'updated_at','id'], 'integer'],
+            [['firstname', 'middlename', 'lastname', 'email', 'cell', 'employee_no', 'nhif', 'nssf', 'passportno', 'krapin'], 'string', 'max' => 255],
+            [['email'], 'email'],
+            ['supervisor_id','safe'],
             [['departmentid'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['departmentid' => 'id']],
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userid' => 'id']],
         ];
@@ -74,14 +76,14 @@ class Employee extends \yii\db\ActiveRecord
             'middlename' => 'Middlename',
             'lastname' => 'Lastname',
             'email' => 'Email',
-            'cell' => 'Cell',
-            'employee_no' => 'Employee No',
-            'departmentid' => 'Departmentid',
-            'nhif' => 'Nhif',
-            'nssf' => 'Nssf',
-            'passportno' => 'Passportno',
-            'krapin' => 'Krapin',
-            'userid' => 'Userid',
+            'cell' => 'Cell Number',
+            'employee_no' => 'Employee No.',
+            'departmentid' => 'Department ID',
+            'nhif' => 'NHIF No.',
+            'nssf' => 'NSSF No.',
+            'passportno' => 'Passport No.',
+            'krapin' => 'KRA P.I.N',
+            'userid' => 'User ID',
             'updated_by' => 'Updated By',
             'created_by' => 'Created By',
             'created_at' => 'Created At',
@@ -117,4 +119,6 @@ class Employee extends \yii\db\ActiveRecord
     {
         return new \app\models\query\EmployeeQuery(get_called_class());
     }
+
+
 }

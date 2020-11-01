@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Create Employee';
 $this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Add Employee', 'url' => ['create']];
 ?>
 <div class="employee-create">
 
@@ -15,6 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'departments' => $departments,
+        'users' => $users,
+        'employees' => $employees
     ]) ?>
 
 </div>

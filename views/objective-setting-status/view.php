@@ -15,6 +15,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Objective Setting Status', 'url' =
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if(Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success alert-dismissable"><?= Yii::$app->session->getFlash('success') ?></div>
+    <?php endif; ?>
+
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Add New', ['create'], ['class' => 'btn btn-info']) ?>

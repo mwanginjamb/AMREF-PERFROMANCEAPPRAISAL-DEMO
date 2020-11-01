@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Appraisalcalendar;
+use app\models\Department;
 use Yii;
 use app\models\Initializedappraisals;
 use app\models\InitializedappraisalsSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,12 +69,22 @@ class InitializedappraisalsController extends Controller
     {
         $model = new Initializedappraisals();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $departments = ArrayHelper::map(Department::find()->all(),'id','department');
+        $appraisalCalendar = ArrayHelper::map(Appraisalcalendar::find()->all(),'id','calendar_year_description');
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Appraisal Initialized Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'departments' => $departments,
+            'appraisalCalendar' => $appraisalCalendar
         ]);
     }
 
@@ -85,13 +98,25 @@ class InitializedappraisalsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $departments = ArrayHelper::map(Department::find()->all(),'id','department');
+        $appraisalCalendar = ArrayHelper::map(Appraisalcalendar::find()->all(),'id','calendar_year_description');
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            // For selected department initialize for all employees therein @to-do
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Appraisal Initialization Updated Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'departments' => $departments,
+            'appraisalCalendar' => $appraisalCalendar
         ]);
     }
 

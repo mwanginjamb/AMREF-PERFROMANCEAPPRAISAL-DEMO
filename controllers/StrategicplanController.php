@@ -66,8 +66,17 @@ class StrategicplanController extends Controller
     {
         $model = new Strategicplan();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->start_year = strtotime(Yii::$app->request->post()['Strategicplan']['start_year']);
+            $model->end_year = strtotime(Yii::$app->request->post()['Strategicplan']['end_year']);
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Strategic Plan Period Created Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
+
         }
 
         return $this->render('create', [
@@ -86,8 +95,15 @@ class StrategicplanController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->start_year = strtotime(Yii::$app->request->post()['Strategicplan']['start_year']);
+            $model->end_year = strtotime(Yii::$app->request->post()['Strategicplan']['end_year']);
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Strategic Plan Period Updated Successfully.', true);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->recruitment->printrr($model->getErrors());
+            }
         }
 
         return $this->render('update', [

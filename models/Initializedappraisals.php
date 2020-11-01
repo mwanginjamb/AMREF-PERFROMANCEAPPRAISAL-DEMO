@@ -72,8 +72,8 @@ class Initializedappraisals extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'appraisalcalendarid' => 'Appraisalcalendarid',
-            'departmentid' => 'Departmentid',
+            'appraisalcalendarid' => 'Appraisal Calendar',
+            'departmentid' => 'Department',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
             'created_at' => 'Created At',

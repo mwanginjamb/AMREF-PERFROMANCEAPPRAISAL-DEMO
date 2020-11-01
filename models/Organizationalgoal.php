@@ -44,7 +44,7 @@ class Organizationalgoal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['goal'], 'required'],
+            [['goal','strategicplanid'], 'required'],
             [['goal'], 'string'],
             [['strategicplanid', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
             [['strategicplanid'], 'exist', 'skipOnError' => true, 'targetClass' => Strategicplan::className(), 'targetAttribute' => ['strategicplanid' => 'id']],
@@ -58,8 +58,8 @@ class Organizationalgoal extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'goal' => 'Goal',
-            'strategicplanid' => 'Strategicplanid',
+            'goal' => 'Organizational Goal Description',
+            'strategicplanid' => 'Strategic Plan ID',
             'updated_by' => 'Updated By',
             'created_by' => 'Created By',
             'created_at' => 'Created At',

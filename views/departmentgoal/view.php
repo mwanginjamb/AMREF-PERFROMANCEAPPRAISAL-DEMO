@@ -8,15 +8,21 @@ use yii\widgets\DetailView;
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Departmentgoals', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Department Goals', 'url' => ['view','id' => $model->id]];
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="departmentgoal-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if(Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success alert-dismissable"><?= Yii::$app->session->getFlash('success') ?></div>
+    <?php endif; ?>
+
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Add', ['create'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('View All', ['index'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -31,13 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'departmentgoal:ntext',
-            'departmentid',
-            'organization_goal_id',
-            'calendarid',
-            'updated_by',
-            'created_by',
-            'created_at',
-            'updated_at',
+            'department.department',
+            'organizationGoal.goal',
+            'calendar.calendar_year_description',
+            //'updated_by',
+            //'created_by',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

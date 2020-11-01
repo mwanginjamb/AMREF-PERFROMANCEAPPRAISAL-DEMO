@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Strategicplan;
 use Yii;
 use app\models\Organizationalgoal;
 use app\models\OrganizationalgoalSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,13 +67,15 @@ class OrganizationalgoalController extends Controller
     public function actionCreate()
     {
         $model = new Organizationalgoal();
-
+        $strategicPlans = ArrayHelper::map(Strategicplan::find()->all(),'id','strategicplan_description');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success','Organizational Goal Added Successfully.', true);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'strategicPlans' => $strategicPlans
         ]);
     }
 
@@ -85,13 +89,16 @@ class OrganizationalgoalController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $strategicPlans = ArrayHelper::map(Strategicplan::find()->all(),'id','strategicplan_description');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success','Organizational Goal Updated Successfully.', true);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'strategicPlans' => $strategicPlans
         ]);
     }
 

@@ -48,7 +48,7 @@ class Departmentgoal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['departmentgoal', 'departmentid', 'calendarid'], 'required'],
+            [['departmentgoal', 'departmentid', 'calendarid','organization_goal_id'], 'required'],
             [['departmentgoal'], 'string'],
             [['departmentid', 'organization_goal_id', 'calendarid', 'updated_by', 'created_by', 'created_at', 'updated_at'], 'integer'],
             [['calendarid'], 'exist', 'skipOnError' => true, 'targetClass' => Appraisalcalendar::className(), 'targetAttribute' => ['calendarid' => 'id']],
@@ -64,10 +64,10 @@ class Departmentgoal extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'departmentgoal' => 'Departmentgoal',
-            'departmentid' => 'Departmentid',
+            'departmentgoal' => 'Department Goal',
+            'departmentid' => 'Department ID',
             'organization_goal_id' => 'Organization Goal ID',
-            'calendarid' => 'Calendarid',
+            'calendarid' => 'Appraisal Calendar ID',
             'updated_by' => 'Updated By',
             'created_by' => 'Created By',
             'created_at' => 'Created At',

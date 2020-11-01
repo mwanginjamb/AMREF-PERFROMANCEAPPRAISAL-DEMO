@@ -12,19 +12,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'start_year')->textInput() ?>
+    <?= $form->field($model, 'start_year')->textInput(['type' => 'date']) ?>
 
-    <?= $form->field($model, 'end_year')->textInput() ?>
+    <?= $form->field($model, 'end_year')->textInput(['type' => 'date']) ?>
 
-    <?= $form->field($model, 'strategicplan_description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'strategicplan_description')->textarea(['rows' => 2]) ?>
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    <?php $form->field($model, 'updated_by')->textInput() ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
+    <?php $form->field($model, 'created_by')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?php $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?php $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

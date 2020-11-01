@@ -7,15 +7,15 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\OrganizationalgoalSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Organizationalgoals';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Organizational Goals';
+$this->params['breadcrumbs'][] = ['label' => 'Organizational Goals', 'url' => ['index']];
 ?>
 <div class="organizationalgoal-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Organizationalgoal', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Organizational Goal', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -26,15 +26,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'goal:ntext',
-            'strategicplanid',
-            'updated_by',
-            'created_by',
+            'strategicplan.strategicplan_description',
+            //'updated_by',
+            //'created_by',
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+
+
+                    'buttons' => [
+                        'view' => function($url){
+                            return Html::a('<i class="fa fa-eye"></i>', $url);
+                        },
+                        'update' => function($url){
+                            return Html::a('<i class="fa fa-edit"></i>', $url);
+                        },
+                        'delete' => function( $url )
+                        {
+                            return Html::a('<i class="fa fa-trash"></i>', $url,[
+
+                                'data' => [
+                                    'confirm' => 'Are you sure you wanna delete this record?',
+                                    'method' => 'POST',
+                                    'params' => [
+                                        '_csrf' => Yii::$app->request->csrfToken
+                                    ]
+
+                                ]
+                            ]);
+                        }
+                    ],
+
+                ],
         ],
     ]); ?>
 
