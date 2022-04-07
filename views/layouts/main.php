@@ -81,10 +81,10 @@ $absoluteUrl = \yii\helpers\Url::home(true);
             <ul class="navbar-nav ml-auto ">
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <!--<a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
                         <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
+                    </a>-->
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
@@ -238,21 +238,21 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>approvals" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
                                         <i class="fa fa-check-square nav-icon"></i>
                                         <p>Submitted Objectives</p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>approvals" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
                                         <i class="fa fa-check-square nav-icon"></i>
                                         <p>Mid Year Reviews</p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>approvals" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
                                         <i class="fa fa-check-square nav-icon"></i>
                                         <p>End Year Reviews</p>
                                     </a>
@@ -445,7 +445,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
 
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; <?= Yii::$app->params['Company'] ?> -  <?= Html::encode(Yii::$app->name) ?> 2014 - <?= date('Y') ?>   <a href="#"> KEMRI</a>.</strong>
+            <strong>Copyright &copy; <?= Yii::$app->params['Company'] ?> -  <?= Html::encode(Yii::$app->name) ?>  <?= date('Y') ?>   <a href="#"> </a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b><?= Yii::signature() ?></b>
