@@ -3,23 +3,49 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "appraisalheader".
  *
  * @property int $id
- * @property string $employee_no
- * @property int|null $objective_setting_status_id
- * @property int|null $ey_status_id
- * @property int|null $my_status_id
- * @property string|null $supervisor_no
+ * @property int|null $supervisor_id
+ * @property string|null $supervisor_name
+ * @property int|null $employee_id
+ * @property string|null $employee_name
+ * @property int|null $overview_supervisor_id
+ * @property string|null $overview_name
+ * @property int|null $appraisee_department
+ * @property string|null $appraisal_start_date
+ * @property string|null $appraisal_end_date
+ * @property string|null $goal_setting_start_date
+ * @property string|null $goal_setting_end_date
+ * @property int|null $goal_setting_status
+ * @property string|null $my_start_date
+ * @property string|null $my_end_date
+ * @property int|null $my_status
+ * @property string|null $ey_start_date
+ * @property string|null $ey_end_date
+ * @property int|null $ey_status
+ * @property string|null $mid_year_comments_employee
+ * @property string|null $mid_year_comments_supervisor
+ * @property string|null $mid_year_comments_overview
+ * @property int|null $recommended_action
+ * @property string|null $ey_supervisor_comments
+ * @property string|null $ey_overview_comments
+ * @property string|null $ey_employee_comments
+ * @property int|null $is_goal_setting
+ * @property int|null $is_mid_year_appraisal
+ * @property int|null $is_end_year_appraisal
+ * @property int|null $is_peer_appraisal
+ * @property int|null $is_agreement
+ * @property float|null $objectives_score
+ * @property float|null $behaviour_score
+ * @property float|null $peer_Score
  * @property int|null $initialization_id
- * @property int|null $created_by
- * @property int|null $updated_by
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
  */
 class Appraisalheader extends \yii\db\ActiveRecord
 {
@@ -31,23 +57,18 @@ class Appraisalheader extends \yii\db\ActiveRecord
         return 'appraisalheader';
     }
 
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-            BlameableBehavior::class
-        ];
-    }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['employee_no'], 'required'],
-            [['objective_setting_status_id','my_status_id', 'ey_status_id', 'initialization_id', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['employee_no', 'supervisor_no'], 'string', 'max' => 255],
+            [['supervisor_id', 'employee_id', 'overview_supervisor_id', 'appraisee_department', 'goal_setting_status', 'my_status', 'ey_status', 'recommended_action', 'is_goal_setting', 'is_mid_year_appraisal', 'is_end_year_appraisal', 'is_peer_appraisal', 'is_agreement', 'initialization_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['appraisal_start_date', 'appraisal_end_date', 'goal_setting_start_date', 'goal_setting_end_date', 'my_start_date', 'my_end_date', 'ey_start_date', 'ey_end_date'], 'safe'],
+            [['mid_year_comments_employee', 'mid_year_comments_supervisor', 'mid_year_comments_overview', 'ey_supervisor_comments', 'ey_overview_comments', 'ey_employee_comments'], 'string'],
+            [['objectives_score', 'behaviour_score', 'peer_Score'], 'number'],
+            [['supervisor_name'], 'string', 'max' => 255],
+            [['employee_name', 'overview_name'], 'string', 'max' => 150],
         ];
     }
 
@@ -58,38 +79,47 @@ class Appraisalheader extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'employee_no' => 'Employee No',
-            'objective_setting_status_id' => 'Objective Setting Status ID',
-            'ey_status_id' => 'End Year Status ID',
-            'my_status_id' => 'Mid Year Status ID',
-            'supervisor_no' => 'Supervisor No',
+            'supervisor_id' => 'Supervisor ID',
+            'supervisor_name' => 'Supervisor Name',
+            'employee_id' => 'Employee ID',
+            'employee_name' => 'Employee Name',
+            'overview_supervisor_id' => 'Overview Supervisor ID',
+            'overview_name' => 'Overview Name',
+            'appraisee_department' => 'Appraisee Department',
+            'appraisal_start_date' => 'Appraisal Start Date',
+            'appraisal_end_date' => 'Appraisal End Date',
+            'goal_setting_start_date' => 'Goal Setting Start Date',
+            'goal_setting_end_date' => 'Goal Setting End Date',
+            'goal_setting_status' => 'Goal Setting Status',
+            'my_start_date' => 'My Start Date',
+            'my_end_date' => 'My End Date',
+            'my_status' => 'My Status',
+            'ey_start_date' => 'Ey Start Date',
+            'ey_end_date' => 'Ey End Date',
+            'ey_status' => 'Ey Status',
+            'mid_year_comments_employee' => 'Mid Year Comments Employee',
+            'mid_year_comments_supervisor' => 'Mid Year Comments Supervisor',
+            'mid_year_comments_overview' => 'Mid Year Comments Overview',
+            'recommended_action' => 'Recommended Action',
+            'ey_supervisor_comments' => 'Ey Supervisor Comments',
+            'ey_overview_comments' => 'Ey Overview Comments',
+            'ey_employee_comments' => 'Ey Employee Comments',
+            'is_goal_setting' => 'Is Goal Setting',
+            'is_mid_year_appraisal' => 'Is Mid Year Appraisal',
+            'is_end_year_appraisal' => 'Is End Year Appraisal',
+            'is_peer_appraisal' => 'Is Peer Appraisal',
+            'is_agreement' => 'Is Agreement',
+            'objectives_score' => 'Objectives Score',
+            'behaviour_score' => 'Behaviour Score',
+            'peer_Score' => 'Peer Score',
             'initialization_id' => 'Initialization ID',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
         ];
     }
 
-    public function getInitialization()
-    {
-        return $this->hasOne(Initializedappraisals::className(), ['id' => 'initialization_id']);
-    }
-
-    public function getEmployee()
-    {
-        return Employee::find()->where(['employee_no' => $this->employee_no ])->asArray()->one();
-    }
-
-    public function getSupervisor()
-    {
-        return Employee::find()->select(["CONCAT(firstname,' ',middlename,' ',lastname) as name"])->where(['employee_no' => $this->supervisor_no])->asArray()->one();
-    }
-
-    public function getDepartmentalobjectives()
-    {
-        return Departmentgoal::find()->where(['departmentid' => $this->employee['departmentid']])->all();
-    }
     /**
      * {@inheritdoc}
      * @return \app\models\query\AppraisalheaderQuery the active query used by this AR class.
