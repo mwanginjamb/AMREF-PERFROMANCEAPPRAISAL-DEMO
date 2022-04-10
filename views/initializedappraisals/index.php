@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Initializedappraisals', 'url' => [
     <h1><?= Html::encode($this->title) ?></h1>
     <?php if(Yii::$app->session->hasFlash('success')): ?>
         <div class="alert alert-success alert-dismissable"><?= Yii::$app->session->getFlash('success') ?></div>
+    <?php  elseif(Yii::$app->session->hasFlash('error')): ?>
+        <div class="alert alert-error alert-dismissable"><?= Yii::$app->session->getFlash('error') ?></div>
     <?php endif; ?>
     <p>
         <?= Html::a('Initialize an Appraisal', ['create'], ['class' => 'btn btn-success']) ?>

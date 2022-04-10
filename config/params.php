@@ -1,12 +1,14 @@
 <?php
 
 return [
-    'adminEmail' => 'customer@softeboard.com',
-    'senderEmail' => 'customer@softeboard.com',
+    'adminEmail' => env('ADMINACCOUNT'),
+    'supportEmail' => env('ADMINACCOUNT'),
+    'senderEmail' => env('ADMINACCOUNT'),
     'senderName' => 'Performance Management Mailer',
+    'user.passwordResetTokenExpire' => 3600,
     'Company' => 'AMREF',
-    'signature' => 'Created with love by francnjamb@gmail.com',
+    'signature' => 'Created with love by Gumzo EBoard Systems.',
     'WelcomeText' => 'Welcome to AMREF Performance Appraisal System',
-    'GeneralTitle' => 'AMREF PAS DEMO',
+    'GeneralTitle' => 'GUMZO PMS',
     'profileControllers' => []
 ];

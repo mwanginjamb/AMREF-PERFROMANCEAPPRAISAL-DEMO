@@ -57,6 +57,11 @@ class Initializedappraisals extends \yii\db\ActiveRecord
         ];
     }
 
+/*
+ * @todo -- Add custom validation for double initialization for period and department
+
+ */
+
     /**
      * {@inheritdoc}
      */
@@ -155,16 +160,19 @@ class Initializedappraisals extends \yii\db\ActiveRecord
             foreach($Employees as $emp){
                 $model = new Appraisalheader();
                 // Populate Appraisal Header
-                $model->employee_no = $emp->employee_no;
-                $model->supervisor_no = $emp->supervisor_id;
+                $model->employee_id = $emp->employee_no;
+                $model->supervisor_id = $emp->supervisor_id;
                 $model->initialization_id = $this->id;
+                $model->is_goal_setting = 1;
                 if(!$model->save()){
-                    $errors[] = $model->getErrors();
+                    $errors = $model->getErrorSummary(true);
                 }
             }
 
             if(count($errors)){
-                Yii::$app->recruitment->printrr($errors);
+                $ErrorString = implode(",",$errors);
+                Yii::$app->recruitment->printrr($ErrorString);
+                Yii::$app->session->setFlash('error',$ErrorString, true);
             }else{
                 Yii::$app->session->setFlash('success','Appraisal Initialized successfully for employees.', true);
             }

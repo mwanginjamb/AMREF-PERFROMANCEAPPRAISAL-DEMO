@@ -267,19 +267,22 @@ class SiteController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $employee = Yii::$app->user->identity->employee;
 
+
+
         // Get Appraisal Header
 
-        $Appraisals = Appraisalheader::find()->where(['employee_no' => $employee->employee_no ])->all();
+        $Appraisals = Appraisalheader::find()->where(['employee_id' => $employee['employee_no'] ])->all();
         $count = 0;
         $result = [];
         foreach($Appraisals as $app)
         {
+
             $link = Html::a('View <i class="fa fa-eye"></i>', ['appraisal','app' => $app->id],['class' => 'btn btn-xs btn-success']);
             ++$count;
             $result['data'][] = [
                     'id' => $count,
                     'calendar' => $app->initialization->appraisalcalendar->calendar_year_description,
-                    'Employee_no' => $app->employee_no,
+                    'Employee_no' => $app->employee_id,
                     'Department' => $app->initialization->department->department,
                     'link' => $link
             ];

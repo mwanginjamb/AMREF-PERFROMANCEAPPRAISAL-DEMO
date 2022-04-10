@@ -8,9 +8,9 @@ use Yii;
  * This is the model class for table "appraisalheader".
  *
  * @property int $id
- * @property int|null $supervisor_id
+ * @property string|null $supervisor_id
  * @property string|null $supervisor_name
- * @property int|null $employee_id
+ * @property string|null $employee_id
  * @property string|null $employee_name
  * @property int|null $overview_supervisor_id
  * @property string|null $overview_name
@@ -63,11 +63,11 @@ class Appraisalheader extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['supervisor_id', 'employee_id', 'overview_supervisor_id', 'appraisee_department', 'goal_setting_status', 'my_status', 'ey_status', 'recommended_action', 'is_goal_setting', 'is_mid_year_appraisal', 'is_end_year_appraisal', 'is_peer_appraisal', 'is_agreement', 'initialization_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['overview_supervisor_id', 'appraisee_department', 'goal_setting_status', 'my_status', 'ey_status', 'recommended_action', 'is_goal_setting', 'is_mid_year_appraisal', 'is_end_year_appraisal', 'is_peer_appraisal', 'is_agreement', 'initialization_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['appraisal_start_date', 'appraisal_end_date', 'goal_setting_start_date', 'goal_setting_end_date', 'my_start_date', 'my_end_date', 'ey_start_date', 'ey_end_date'], 'safe'],
             [['mid_year_comments_employee', 'mid_year_comments_supervisor', 'mid_year_comments_overview', 'ey_supervisor_comments', 'ey_overview_comments', 'ey_employee_comments'], 'string'],
             [['objectives_score', 'behaviour_score', 'peer_Score'], 'number'],
-            [['supervisor_name'], 'string', 'max' => 255],
+            [['supervisor_id', 'supervisor_name', 'employee_id'], 'string', 'max' => 255],
             [['employee_name', 'overview_name'], 'string', 'max' => 150],
         ];
     }
@@ -120,12 +120,8 @@ class Appraisalheader extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     * @return \app\models\query\AppraisalheaderQuery the active query used by this AR class.
-     */
-    public static function find()
+    public function getInitialization()
     {
-        return new \app\models\query\AppraisalheaderQuery(get_called_class());
+        return $this->hasOne(Initializedappraisals::class,['id' => 'initialization_id' ]);
     }
 }

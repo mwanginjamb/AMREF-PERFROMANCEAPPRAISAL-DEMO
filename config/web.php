@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'Amref PAS',
+    'name' => 'GUMZO PMS',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -36,10 +36,18 @@ $config = [
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'mail.softeboard.com',
-                'username' => 'customer@softeboard.com',
-                'password' => '@Customer1220#*',
-                'port' => '587',
+                'host' => env('SMTPSERVER'),
+                'username' => env('SMTPUSER'),
+                'password' => env('SMTPPWD'),
+                'port' => env('PORT'),
+                'encryption' => env('ENCRYPTION'),
+                'streamOptions' => [
+                    'ssl' => [
+                        'allow_self_signed' => true,
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                    ],
+                ],
             ],
         ],
         'log' => [

@@ -231,12 +231,18 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                             <a href="#" class="nav-link <?= Yii::$app->recruitment->currentCtrl('approvals')?'active':'' ?>">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Approval Management
+                                    Appraisal Management
                                     <i class="fas fa-angle-left right"></i>
                                     <!--<span class="badge badge-info right">6</span>-->
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
+                                        <i class="fa fa-check-square nav-icon"></i>
+                                        <p>Goal Setting</p>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
                                         <i class="fa fa-check-square nav-icon"></i>
