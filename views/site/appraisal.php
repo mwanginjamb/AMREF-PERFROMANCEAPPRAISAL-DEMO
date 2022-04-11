@@ -10,6 +10,7 @@ $this->title = Yii::$app->params['GeneralTitle'];
 $this->params['breadcrumbs'][] = ['label' => 'Appraisals', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Appraisal Card', 'url' => ['appraisal','app'=> $model->id]];
 $form = \yii\widgets\ActiveForm::begin();
+//Yii::$app->recruitment->printrr($model->departmentalobjectives);
 ?>
 <div class="appraisal">
     <?php   //Yii::$app->recruitment->printrr($model); ?>
@@ -17,7 +18,7 @@ $form = \yii\widgets\ActiveForm::begin();
         <div class="col-md-12">
                 <!--   Appraisee Data         -->
 
-            <div class="card card-danger">
+            <div class="card card-info">
                 <div class="card-header">
 
                         <h3 class="card-title"> Appraisee Data</h3>
@@ -38,13 +39,13 @@ $form = \yii\widgets\ActiveForm::begin();
                             <?= Html::label('Email',['email'])?>
                             <?= Html::input('text', 'email', $model->employee['email'], ['class' => 'form-control','readonly' => true]) ?>
 
-                            <?= $form->field($model, 'supervisor_no')->textInput(['readonly' =>  true]) ?>
+                            <?= $form->field($model, 'supervisor_id')->textInput(['readonly' =>  true]) ?>
 
                             <?= Html::label('Department',['department'])?>
                             <?= Html::input('text', 'department', $model->initialization->department->department, ['class' => 'form-control','readonly' => true]) ?>
 
 
-                            <?= $form->field($model, 'objective_setting_status_id')->dropdownList($objectiveSettingStatus,['readonly' =>  true]) ?>
+                            <?= $form->field($model, 'goal_setting_status')->dropdownList($objectiveSettingStatus,['readonly' =>  true]) ?>
 
                         </div>
                         <div class="col-md-6">
@@ -55,10 +56,10 @@ $form = \yii\widgets\ActiveForm::begin();
                             <?= Html::input('text', 'cell', $model->employee['cell'], ['class' => 'form-control','readonly' => true]) ?>
 
                             <?= Html::label('Supervisor Name',['supervisor'])?>
-                            <?= Html::input('text', 'department', $model->supervisor['name'] , ['class' => 'form-control','readonly' => true]) ?>
+                            <?= Html::input('text', 'name', $model->supervisor['firstname'].' '. $model->supervisor['middlename'].' '.$model->supervisor['lastname'], ['class' => 'form-control','readonly' => true]) ?>
 
-                            <?= $form->field($model, 'my_status_id')->dropdownList($appraisalStatus, ['readonly' =>  true]) ?>
-                            <?= $form->field($model, 'ey_status_id')->dropdownList($appraisalStatus, ['readonly' =>  true]) ?>
+                            <?= $form->field($model, 'my_status')->dropdownList($appraisalStatus, ['readonly' =>  true]) ?>
+                            <?= $form->field($model, 'ey_status')->dropdownList($appraisalStatus, ['readonly' =>  true]) ?>
 
                         </div>
                     </div>
@@ -67,7 +68,7 @@ $form = \yii\widgets\ActiveForm::begin();
 
             <!--  Performance Objectives          -->
 
-            <div class="card card-danger">
+            <div class="card card-info">
                 <div class="card-header">
 
                     <h3 class="card-title"> Performance Objectives</h3>
@@ -80,9 +81,10 @@ $form = \yii\widgets\ActiveForm::begin();
 
                 <div class="card-body">
                     <div class="row">
-                        <table class="table table-bordered table-hover">
-                            <tr><td colspan="2"><b>Department Objectives</b></td></tr>
-                            <tbody>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <tr><td colspan="2"><b>Department Objectives</b></td></tr>
+                                <tbody>
                                 <?php foreach($model->departmentalobjectives as $dobjective): ?>
                                     <tr class="parent">
                                         <td><span>+</span></td>
@@ -93,79 +95,84 @@ $form = \yii\widgets\ActiveForm::begin();
                                         <td colspan="2">
                                             <table class="table table-hover table-info">
                                                 <thead>
-                                                    <tr>
-                                                        <th>Performance Objective</th>
-                                                        <th>Weight</th>
-                                                        <th><?= ($model->objective_setting_status_id == 1)?Html::a('<i class="fas fa-plus"></i>',['objective/create','dgid'=> $dobjective->id,'Employee_No' => $model->employee['employee_no'],'appraisal_Id' => $model->id],['class' => 'btn btn-xs btn-success add-objective','title' => 'Add Objective']):'' ?></th>
-                                                    </tr>
+                                                <tr>
+                                                    <td class="text-bold">#</td>
+                                                    <td class="text-bold">KRA / Performance Objective</td>
+                                                    <td class="text-bold">Perfomance Level</td>
+                                                    <td class="text-bold">Perfomance Comment</td>
+                                                    <td class="text-bold">Appraisee Self_Rating</td>
+                                                    <td class="text-bold">Appraiser Rating</td>
+                                                    <td class="text-bold">Agreed Rating</td>
+                                                    <td class="text-bold">Rating Comments</td>
+                                                    <td class="text-bold">Employee Comments</td>
+                                                    <td class="text-bold">Overall Weight</td>
+                                                    <td><?= Html::a('<i class="fas fa-plus"></i>',['objective/create','dgid'=> $dobjective->id,'Employee_No' => $model->employee['employee_no'],'appraisal_Id' => $model->id],['class' => 'btn btn-xs btn-success add-objective','title' => 'Add Objective'])?></td>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
+                                                <?php
 
-                                                    foreach($dobjective->objectives as $obj ){ ?>
+                                                foreach($dobjective->objectives as $obj ){ ?>
 
-                                                        <tr class="parent">
-                                                            <td><span>+</span></td>
-                                                            <td><?= $obj->objective ?></td>
-                                                            <td><?= $obj->weight ?></td>
-                                                            <td><?= Html::a('<i class="fa fa-trash"></i>',['objective/delete','id' => $obj->id],['class'=> 'btn btn-xs btn-danger delete-objective','title' => 'Delete Objective'])?></td>
-                                                        </tr>
+                                                    <tr class="parent">
+                                                        <td><span>+</span></td>
+                                                        <td><?= $obj->objective ?></td>
+                                                        <td><?= !empty($obj->Perfomance_Level)?$obj->Perfomance_Level:'' ?></td>
+                                                        <td><?= !empty($obj->Perfomance_Comment)?$obj->Perfomance_Comment:'' ?></td>
+                                                        <td><?= !empty($obj->Appraisee_Self_Rating)?$obj->Appraisee_Self_Rating:'' ?></td>
+                                                        <td><?= !empty($obj->Appraiser_Rating)?$obj->Appraiser_Rating:'' ?></td>
+                                                        <td><?= !empty($obj->Agreed_Rating)?$obj->Agreed_Rating:'' ?></td>
+                                                        <td><?= !empty($obj->Rating_Comments)?$obj->Rating_Comments:'' ?></td>
+                                                        <td><?= !empty($obj->Employee_Comments)?$obj->Employee_Comments:'' ?></td>
+                                                        <td><?= !empty($obj->weight)?$obj->weight:'' ?></td>
+                                                        <td><?= Html::a('<i class="fa fa-trash"></i>',['objective/delete','id' => $obj->id],['class'=> 'btn btn-xs btn-danger delete-objective','title' => 'Delete Objective'])?></td>
+                                                    </tr>
 
-                                                        <!--KPI-->
+                                                    <!--KPI-->
 
-                                                        <tr class="child">
-                                                            <td colspan="4">
-                                                                <table class="table table-stripped table-success">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>KPI</th>
-                                                                            <th>Achievement</th>
-                                                                            <th>Weight on Objective</th>
-                                                                            <th>Mid Year Status</th>
-                                                                            <th>Appraisee M.Y Comment</th>
-                                                                            <th>Supervisor M.Y Comment</th>
-                                                                            <th>Self Rating E.Y</th>
-                                                                            <th>Agreed Rating E.Y</th>
-                                                                            <th>Appraisee E.Y Comment</th>
-                                                                            <th>Supervisor E.Y Comment</th>
-                                                                            <th><?= ($model->objective_setting_status_id == 1)?Html::a('<i class="fas fa-plus"></i>',['kpi/create','objectiveid'=> $obj->id],['class' => 'btn btn-xs btn-success add-objective','title' => 'Add Objective KPI (MAX 3)']):'' ?></th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+                                                    <tr class="child">
+                                                        <td colspan="11">
+                                                            <table class="table table-stripped table-success">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td class="text-bold text-primary">KPI</td>
+                                                                    <td class="text-bold text-primary">Due Date</td>
+                                                                    <th><?= ($model->is_goal_setting)?Html::a('<i class="fas fa-plus"></i>',['kpi/create','objectiveid'=> $obj->id],['class' => 'btn btn-xs btn-success add-objective','title' => 'Add Objective KPI (MAX 3)']):'' ?></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
 
 
-                                                                    <?php foreach($obj->kpis as $kpi){ ?>
+                                                                <?php foreach($obj->kpis as $kpi){ ?>
 
-                                                                        <tr>
-                                                                            <td><?= $kpi->kpi ?></td>
-                                                                            <td><?= $kpi->achievement ?></td>
-                                                                            <td><?= $kpi->weight_on_objective ?></td>
-                                                                            <td><?= $kpi->mid_year_status ?></td>
-                                                                            <td><?= $kpi->appraisee_mid_year_performance_comment ?></td>
-                                                                            <td><?= $kpi->supervisor_mid_year_performance_comment ?></td>
-                                                                            <td><?= $kpi->self_rating ?></td>
-                                                                            <td><?= $kpi->agreed_rating ?></td>
-                                                                            <td><?= $kpi->appraisee_end_year_performance_comment ?></td>
-                                                                            <td><?= $kpi->supervisor_end_year_performance_comment ?></td>
-                                                                            <td><?= Html::a('<i class="fa fa-trash"></i>',['kpi/delete','id' => $kpi->id],['class'=> 'btn btn-xs btn-danger delete-objective','title' => 'Delete Objective'])?></td>
-                                                                        </tr>
+                                                                    <tr>
+                                                                        <td><?= $kpi->kpi ?></td>
+                                                                        <td><?= !empty($kpi->due_date)?$kpi->due:'' ?></td>
+                                                                        <td>
+                                                                            <?= ($model->is_goal_setting )?Html::a('<i class="fas fa-edit"></i> ',['kpi/update','id'=> $kpi->id],['class' => 'btn btn-xs btn-primary add-objective', 'title' => 'Update Objective /KPI']):'' ?>
+                                                                            <?= ($model->is_goal_setting )? Html::a('<i class="fa fa-trash"></i>',['kpi/delete','id' => $kpi->id],['class'=> 'btn btn-xs btn-danger delete-objective','title' => 'Delete Objective']):'' ?>
+                                                                        </td>
 
-                                                                    <?php } ?>
+                                                                    </tr>
 
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
+                                                                <?php } ?>
 
-                                                    <?php } ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+
+                                                <?php } ?>
                                                 </tbody>
                                             </table>
                                         </td>
 
                                     </tr>
                                 <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

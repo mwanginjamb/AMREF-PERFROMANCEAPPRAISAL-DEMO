@@ -164,6 +164,7 @@ class Initializedappraisals extends \yii\db\ActiveRecord
                 $model->supervisor_id = $emp->supervisor_id;
                 $model->initialization_id = $this->id;
                 $model->is_goal_setting = 1;
+                $model->appraisee_department = $emp->departmentid;
                 if(!$model->save()){
                     $errors = $model->getErrorSummary(true);
                 }

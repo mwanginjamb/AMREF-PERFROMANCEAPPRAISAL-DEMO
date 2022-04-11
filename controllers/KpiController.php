@@ -119,6 +119,12 @@ class KpiController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
+        }
+
         return $this->render('update', [
             'model' => $model,
         ]);

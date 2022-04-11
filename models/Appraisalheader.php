@@ -124,4 +124,20 @@ class Appraisalheader extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Initializedappraisals::class,['id' => 'initialization_id' ]);
     }
+
+    public function getEmployee()
+    {
+        return $this->hasOne(Employee::class,['employee_no' => 'employee_id' ]);
+    }
+
+    public function getSupervisor()
+    {
+        return $this->hasOne(Employee::class,['employee_no' => 'supervisor_id' ]);
+    }
+
+    public function getDepartmentalobjectives()
+    {
+        return $this->hasMany(Departmentgoal::class,['departmentid' => 'appraisee_department']);
+    }
+
 }
