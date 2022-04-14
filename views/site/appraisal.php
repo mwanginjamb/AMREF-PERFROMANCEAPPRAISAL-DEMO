@@ -11,9 +11,28 @@ $this->params['breadcrumbs'][] = ['label' => 'Appraisals', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Appraisal Card', 'url' => ['appraisal','app'=> $model->id]];
 $form = \yii\widgets\ActiveForm::begin();
 //Yii::$app->recruitment->printrr($model->departmentalobjectives);
+Yii::$app->session->set('Goal_Setting_Status',$model->goal_setting_status);
+Yii::$app->session->set('MY_Appraisal_Status',$model->my_status);
+Yii::$app->session->set('EY_Appraisal_Status',$model->ey_status);
+//Yii::$app->recruitment->printrr($model);
 ?>
 <div class="appraisal">
-    <?php   //Yii::$app->recruitment->printrr($model); ?>
+
+
+<!--    Action Buttons-->
+
+    <?= Html::a('<i class="fas fa-forward"></i> submit',['submit','appraisalNo'=> $model->id,'employeeNo' => $model->employee_id],['class' => 'btn btn-app','data' => [
+        'confirm' => 'Are you sure you want to submit this appraisal?',
+        'method' => 'post',
+    ],
+        'title' => 'Submit Goals for Approval'
+
+    ]) ?>
+
+<!--    / Action Buttons-->
+
+
+
     <div class="row">
         <div class="col-md-12">
                 <!--   Appraisee Data         -->
@@ -125,7 +144,9 @@ $form = \yii\widgets\ActiveForm::begin();
                                                         <td><?= !empty($obj->Rating_Comments)?$obj->Rating_Comments:'' ?></td>
                                                         <td><?= !empty($obj->Employee_Comments)?$obj->Employee_Comments:'' ?></td>
                                                         <td><?= !empty($obj->weight)?$obj->weight:'' ?></td>
-                                                        <td><?= Html::a('<i class="fa fa-trash"></i>',['objective/delete','id' => $obj->id],['class'=> 'btn btn-xs btn-danger delete-objective','title' => 'Delete Objective'])?></td>
+                                                        <td>
+                                                            <?= Html::a('<i class="fa fa-edit mx-auto"></i>',['objective/update','id' => $obj->id],['class'=> 'btn btn-xs btn-warning add-objective','title' => 'Update Objective'])?>
+                                                            <?= Html::a('<i class="fa fa-trash mx-auto"></i>',['objective/delete','id' => $obj->id],['class'=> 'btn btn-xs btn-danger delete-objective','title' => 'Delete Objective'])?></td>
                                                     </tr>
 
                                                     <!--KPI-->
@@ -262,7 +283,7 @@ $script = <<<JS
     
     /*Divs parenting*/
     
-     $('p.parent').find('span').text('+');
+    $('p.parent').find('span').text('+');
     $('p.parent').find('span').css({"color":"red", "font-weight":"bolder"});    
     $('p.parent').nextUntil('p.parent').slideUp(1, function(){});    
     $('p.parent').click(function(){

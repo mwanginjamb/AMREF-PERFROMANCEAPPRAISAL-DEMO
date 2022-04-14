@@ -145,12 +145,12 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <!--<span class="dropdown-item dropdown-header">15 Notifications</span>
-                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>-->
                         <a href="#" class="dropdown-item">
                             <i class="fas fa-envelope mr-2"></i> 4 new messages
                             <span class="float-right text-muted text-sm">3 mins</span>
                         </a>
-                        <div class="dropdown-divider"></div>
+                       <!-- <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> 8 friend requests
                             <span class="float-right text-muted text-sm">12 hours</span>
@@ -226,9 +226,9 @@ $absoluteUrl = \yii\helpers\Url::home(true);
 
 <!--Approval Management -->
                         <?php if(!Yii::$app->user->isGuest ): ?>
-                        <li class="nav-item has-treeview <?= Yii::$app->recruitment->currentCtrl('approvals')?'menu-open':'' ?>">
+                        <li class="nav-item has-treeview <?= Yii::$app->recruitment->currentCtrl('site')?'menu-open':'' ?>">
 
-                            <a href="#" class="nav-link <?= Yii::$app->recruitment->currentCtrl('approvals')?'active':'' ?>">
+                            <a href="#" class="nav-link <?= Yii::$app->recruitment->currentCtrl('site')?'active':'' ?>">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Appraisal Management
@@ -238,7 +238,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('site','index')?'active':'' ?>">
                                         <i class="fa fa-check-square nav-icon"></i>
                                         <p>Goal Setting</p>
                                     </a>
@@ -250,19 +250,141 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
-                                        <i class="fa fa-check-square nav-icon"></i>
-                                        <p>Mid Year Reviews</p>
+                                <!--Mid Year Appraisals-->
+                                <li class="nav-item has-treeview <?= Yii::$app->recruitment->currentCtrl('appraisal')?'menu-open':'' ?>">
+                                    <a href="#" class="nav-link <?= Yii::$app->recruitment->currentCtrl('appraisal')?'active':'' ?>">
+                                        <i class="nav-icon fa fa-balance-scale"></i>
+                                        <p>
+                                            Mid Year Appraisals
+                                            <i class="fas fa-angle-left right"></i>
+                                            <!--<span class="badge badge-info right">6</span>-->
+                                        </p>
                                     </a>
-                                </li>
 
-                                <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
-                                        <i class="fa fa-check-square nav-icon"></i>
-                                        <p>End Year Reviews</p>
+                                    <ul class="nav nav-treeview"><!--Mid Year Appraisals Menu-->
+
+                                       <li class="nav-item">
+                                            <a href="<?= $absoluteUrl ?>appraisal/myappraiseelist" class="nav-link <?= Yii::$app->recruitment->currentaction('appraisal','myappraiseelist')?'active':'' ?>">
+                                                <i class="fa fa-check-square nav-icon"></i>
+                                                <p>M-Y Appraisal (Appraisee) </p>
+                                            </a>
+                                        </li>
+
+                                        <?php if( 1 == 1 ):  ?>
+
+                                            <li class="nav-item">
+                                                <a href="<?= $absoluteUrl ?>appraisal/mysupervisorlist" class="nav-link <?= Yii::$app->recruitment->currentaction('appraisal','mysupervisorlist')?'active':'' ?>">
+                                                    <i class="fa fa-check-square nav-icon"></i>
+                                                    <p>M-Y Appraisal (Supervisor) </p>
+                                                </a>
+                                            </li>
+
+                                        <?php endif; ?>
+
+                                        <!-- <li class="nav-item">
+                                            <a href="<?/*= $absoluteUrl */?>appraisal/myapprovedappraiseelist" class="nav-link <?/*= Yii::$app->recruitment->currentaction('appraisal','myapprovedappraiseelist')?'active':'' */?>">
+                                                <i class="fa fa-check-square nav-icon"></i>
+                                                <p>M-Y Approved (Appraisee) </p>
+                                            </a>
+                                        </li>-->
+
+                                        <?php if(1 == 1):  ?>
+
+                                            <li class="nav-item">
+                                                <a href="<?= $absoluteUrl ?>appraisal/myapprovedsupervisorlist" class="nav-link <?= Yii::$app->recruitment->currentaction('appraisal','myapprovedsupervisorlist')?'active':'' ?>">
+                                                    <i class="fa fa-check-square nav-icon"></i>
+                                                    <p>M-Y Approved (Supervisor) </p>
+                                                </a>
+                                            </li>
+
+                                        <?php endif; ?>
+
+
+
+
+                                    </ul><!--End Mid Year Appraisals menu list-->
+
+
+                                </li><!--End Mid Year Child Menu list-->
+
+                                <!--end Year Appraisals -->
+                                <li class="nav-item has-treeview <?= Yii::$app->recruitment->currentCtrl('appraisal')?'menu-open':'' ?>">
+                                    <a href="#" class="nav-link <?= Yii::$app->recruitment->currentCtrl('appraisal')?'active':'' ?>">
+                                        <i class="nav-icon fa fa-balance-scale"></i>
+                                        <p>
+                                            End Year Appraisals
+                                            <i class="fas fa-angle-left right"></i>
+                                            <!--<span class="badge badge-info right">6</span>-->
+                                        </p>
                                     </a>
-                                </li>
+
+                                    <ul class="nav nav-treeview"><!--Mid Year Appraisals Menu-->
+
+
+                                        <!--<li class="nav-item">
+                                            <a href="<?/*= $absoluteUrl */?>appraisal/eyappraiseelist" class="nav-link <?/*= Yii::$app->recruitment->currentaction('appraisal','eyappraiseelist')?'active':'' */?>">
+                                                <i class="fa fa-check-square nav-icon"></i>
+                                                <p>E-Y Appraisals (Appraisee) </p>
+                                            </a>
+                                        </li>-->
+
+                                        <?php if(1 == 1):  ?>
+                                            <li class="nav-item">
+                                                <a href="<?= $absoluteUrl ?>appraisal/eysupervisorlist" class="nav-link <?= Yii::$app->recruitment->currentaction('appraisal','eysupervisorlist')?'active':'' ?>">
+                                                    <i class="fa fa-check-square nav-icon"></i>
+                                                    <p>E-Y Appraisals (Supervisor) </p>
+                                                </a>
+                                            </li>
+
+                                        <?php endif; ?>
+
+                                        <!--<li class="nav-item">
+                                            <a href="<?/*= $absoluteUrl */?>appraisal/eypeer1list" class="nav-link <?/*= Yii::$app->recruitment->currentaction('appraisal','eypeer1list')?'active':'' */?>">
+                                                <i class="fa fa-check-square nav-icon"></i>
+                                                <p>E-Y Appraisals (Peer1) </p>
+                                            </a>
+                                        </li>-->
+
+
+                                        <!--<li class="nav-item">
+                                            <a href="<?/*= $absoluteUrl */?>appraisal/eypeer2list" class="nav-link <?/*= Yii::$app->recruitment->currentaction('appraisal','eypeer2list')?'active':'' */?>">
+                                                <i class="fa fa-check-square nav-icon"></i>
+                                                <p>E-Y Appraisals (Peer2) </p>
+                                            </a>
+                                        </li>-->
+
+                                        <?php if(1 == 1):  ?>
+                                            <li class="nav-item">
+                                                <a href="<?= $absoluteUrl ?>appraisal/eyagreementlist" class="nav-link <?= Yii::$app->recruitment->currentaction('appraisal','eyagreementlist')?'active':'' ?>">
+                                                    <i class="fa fa-check-square nav-icon"></i>
+                                                    <p>E-Y Appraisals (Agreement) </p>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+
+                                        <!-- <li class="nav-item">
+                                            <a href="<?/*= $absoluteUrl */?>appraisal/eyappraiseeclosedlist" class="nav-link <?/*= Yii::$app->recruitment->currentaction('appraisal','eyappraiseeclosedlist')?'active':'' */?>">
+                                                <i class="fa fa-check-square nav-icon"></i>
+                                                <p>E-Y Closed (Appraisee) </p>
+                                            </a>
+                                        </li>-->
+                                        <?php if(1 == 1):  ?>
+                                            <li class="nav-item">
+                                                <a href="<?= $absoluteUrl ?>appraisal/eysupervisorclosedlist" class="nav-link <?= Yii::$app->recruitment->currentaction('appraisal','eysupervisorclosedlist')?'active':'' ?>">
+                                                    <i class="fa fa-check-square nav-icon"></i>
+                                                    <p>E-Y Closed (Superviosr) </p>
+                                                </a>
+                                            </li>
+
+                                        <?php endif; ?>
+
+
+
+
+                                    </ul><!--End Mid Year Appraisals menu list-->
+
+
+                                </li><!--/ End Year Child Menu list-->
 
 
                             </ul>
@@ -373,6 +495,13 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                                     <a href="<?= $absoluteUrl ?>rating" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','create')?'active':'' ?> " title="Mid Year Performance Levels">
                                         <i class="fa fa-chess-rook nav-icon"></i>
                                         <p>Performance Rating</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="<?= $absoluteUrl ?>midyearperformancelevels" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','create')?'active':'' ?> " title="Mid Year Performance Levels">
+                                        <i class="fa fa-chess-rook nav-icon"></i>
+                                        <p>Performance Levels</p>
                                     </a>
                                 </li>
 

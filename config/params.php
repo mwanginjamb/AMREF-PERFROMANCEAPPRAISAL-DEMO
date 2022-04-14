@@ -8,7 +8,7 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'Company' => 'AMREF',
     'signature' => 'Created with love by Gumzo EBoard Systems.',
-    'WelcomeText' => 'Welcome to AMREF Performance Appraisal System',
+    'WelcomeText' => 'Employee Performance Management System',
     'GeneralTitle' => 'GUMZO PMS',
     'profileControllers' => []
 ];

@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Midyearperformancelevels;
 use Yii;
 use app\models\Objective;
 use app\models\ObjectiveSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -98,6 +100,7 @@ class ObjectiveController extends Controller
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('create', [
                 'model' => $model,
+                'performanceLevels' => []
             ]);
         }
 
@@ -119,6 +122,13 @@ class ObjectiveController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('update', [
+                'model' => $model,
+                'performanceLevels' => ArrayHelper::map(Midyearperformancelevels::find()->all(),'id','level')
+            ]);
         }
 
         return $this->render('update', [

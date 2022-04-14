@@ -17,12 +17,18 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $created_at
  * @property int|null $updated_at
  * @property int $weight
- * @property float $weighted_objective_score
- * @property float $employee_no
- * @property float $appraisal_id
+ * @property float|null $weighted_objective_score
+ * @property int|null $employee_no
+ * @property int|null $appraisal_id
+ * @property string|null $performance_level
+ * @property string|null $performance_comment
+ * @property int|null $appraisee_self_rating
+ * @property int|null $appraiser_rating
+ * @property int|null $agreed_rating
+ * @property string|null $rating_comments
+ * @property string|null $employee_comments
  *
  * @property Kpi[] $kpis
- * @property Departmentgoal $departmentgoal
  */
 class Objective extends \yii\db\ActiveRecord
 {
@@ -49,11 +55,10 @@ class Objective extends \yii\db\ActiveRecord
     {
         return [
             [['departmentgoalid', 'objective', 'weight'], 'required'],
-            ['objective','unique'],
-            [['departmentgoalid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight','appraisal_id'], 'integer'],
-            [['objective','employee_no'], 'string'],
+            [['departmentgoalid', 'updated_by', 'created_by', 'created_at', 'updated_at', 'weight', 'employee_no', 'appraisal_id', 'appraisee_self_rating', 'appraiser_rating', 'agreed_rating'], 'integer'],
+            [['objective', 'performance_comment', 'rating_comments', 'employee_comments'], 'string'],
             [['weighted_objective_score'], 'number'],
-            //[['departmentgoalid'], 'exist', 'skipOnError' => true, 'targetClass' => Departmentgoal::className(), 'targetAttribute' => ['departmentgoalid' => 'id']],
+            [['performance_level'], 'string', 'max' => 255],
         ];
     }
 
@@ -64,7 +69,7 @@ class Objective extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'departmentgoalid' => 'Department Goal',
+            'departmentgoalid' => 'Departmentgoalid',
             'objective' => 'Objective',
             'updated_by' => 'Updated By',
             'created_by' => 'Created By',
@@ -72,6 +77,15 @@ class Objective extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'weight' => 'Weight',
             'weighted_objective_score' => 'Weighted Objective Score',
+            'employee_no' => 'Employee No',
+            'appraisal_id' => 'Appraisal ID',
+            'performance_level' => 'Performance Level',
+            'performance_comment' => 'Performance Comment',
+            'appraisee_self_rating' => 'Appraisee Self Rating',
+            'appraiser_rating' => 'Appraiser Rating',
+            'agreed_rating' => 'Agreed Rating',
+            'rating_comments' => 'Rating Comments',
+            'employee_comments' => 'Employee Comments',
         ];
     }
 

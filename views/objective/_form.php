@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Objective */
@@ -15,16 +15,18 @@ use yii\widgets\ActiveForm;
     <?php $form->field($model, 'departmentgoalid')->textInput() ?>
 
     <?= $form->field($model, 'objective')->textarea(['rows' => 2]) ?>
-    <?= $form->field($model, 'weight')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'performance_level')->dropDownList($performanceLevels, ['prompt' => 'Select ...']) ?>
+    <?= $form->field($model, 'performance_comment')->textarea() ?>
+    <?= $form->field($model, 'appraisee_self_rating')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'appraiser_rating')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'agreed_rating')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'rating_comments')->textarea() ?>
+    <?= $form->field($model, 'employee_comments')->textarea() ?>
 
     <?php $form->field($model, 'updated_by')->textInput() ?>
-
     <?php $form->field($model, 'created_by')->textInput() ?>
-
     <?php $form->field($model, 'created_at')->textInput() ?>
-
     <?php $form->field($model, 'updated_at')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
