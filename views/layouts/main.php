@@ -244,9 +244,16 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= $absoluteUrl ?>site" class="nav-link <?= Yii::$app->recruitment->currentaction('approvals','index')?'active':'' ?>">
+                                    <a href="<?= $absoluteUrl ?>site/goalsetting-supervisor" class="nav-link <?= Yii::$app->recruitment->currentaction('site','goalsetting-supervisor')?'active':'' ?>">
                                         <i class="fa fa-check-square nav-icon"></i>
-                                        <p>Submitted Objectives</p>
+                                        <p>Supervisor List</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="<?= $absoluteUrl ?>site/goalsetting-overview" class="nav-link <?= Yii::$app->recruitment->currentaction('site','goalsetting-overview')?'active':'' ?>">
+                                        <i class="fa fa-check-square nav-icon"></i>
+                                        <p>HR List</p>
                                     </a>
                                 </li>
 

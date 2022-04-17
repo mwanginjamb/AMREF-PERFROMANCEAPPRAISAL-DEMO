@@ -11,7 +11,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">My Appraisals</div>
+                    <div class="card-title">Supervisor Goal Setting Appraisals List</div>
                 </div>
                 <div class="card-body">
                     <table class="table table-hover" id="appraisal"></table>
@@ -35,7 +35,7 @@ $script = <<<JS
     $('#appraisal').DataTable({
            
             //serverSide: true,  
-            ajax: url+'site/list',
+            ajax: url+'site/list-goalsetting-supervisor',
             paging: true,
             searching: true,
             columns: [

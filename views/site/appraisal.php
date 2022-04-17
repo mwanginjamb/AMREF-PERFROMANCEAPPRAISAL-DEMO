@@ -21,7 +21,7 @@ Yii::$app->session->set('EY_Appraisal_Status',$model->ey_status);
 
 <!--    Action Buttons-->
 
-<?php $this->render('_actions', ['model' => $model])?>
+<?php echo $this->render('_actions', ['model' => $model])?>
 
 <!--    / Action Buttons-->
 

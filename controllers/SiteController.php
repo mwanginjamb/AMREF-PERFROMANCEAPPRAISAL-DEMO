@@ -39,7 +39,11 @@ class SiteController extends Controller
                 'only' => ['logout','index','list','appraisal'],
                 'rules' => [
                     [
-                        'actions' => ['logout','index','list','appraisal','submit'],
+                        'actions' => [
+                            'logout','index','list','appraisal','submit',
+                            'list-goalsetting-supervisor','list-goalsetting-overview',
+                            'goalsetting-supervisor','goalsetting-overview'
+                            ],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -78,6 +82,16 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionGoalsettingSupervisor()
+    {
+        return $this->render('goalsetting_supervisor');
+    }
+
+    public function actionGoalsettingOverview()
+    {
+        return $this->render('goalsetting_overview');
     }
 
     /**
@@ -260,19 +274,12 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    // List Appraisals
+    // List Appraisee Goal Setting Appraisals
 
     public function actionList()
     {
-        //get Employee Details
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $employee = Yii::$app->user->identity->employee;
-
-
-
         // Get Appraisal Header
-
-        $Appraisals = Appraisalheader::find()->where(['employee_id' => $employee['employee_no'] ])->all();
+        $Appraisals = Appraisalheader::find()->where(['employee_id' => Yii::$app->user->identity->employeeId,'goal_setting_status' => $this->goalSettingStatus('Appraisee') ])->all();
         $count = 0;
         $result = [];
         foreach($Appraisals as $app)
@@ -288,9 +295,61 @@ class SiteController extends Controller
                     'link' => $link
             ];
         }
-
+        Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
     }
+
+    // List : Supervisor Goal Setting List
+
+    public function actionListGoalsettingSupervisor()
+    {
+        // Get Appraisal Header
+        $Appraisals = Appraisalheader::find()->where([/*'supervisor_id' => Yii::$app->user->identity->employeeId,*/'goal_setting_status' => $this->goalSettingStatus('Supervisor') ])->all();
+        $count = 0;
+        $result = [];
+        foreach($Appraisals as $app)
+        {
+
+            $link = Html::a('View <i class="fa fa-eye"></i>', ['appraisal','app' => $app->id],['class' => 'btn btn-xs btn-success']);
+            ++$count;
+            $result['data'][] = [
+                'id' => $count,
+                'calendar' => $app->initialization->appraisalcalendar->calendar_year_description,
+                'Employee_no' => $app->employee_id,
+                'Department' => $app->initialization->department->department,
+                'link' => $link
+            ];
+        }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $result;
+    }
+
+    // List : Overview Goal Setting List
+
+    public function actionListGoalsettingOverview()
+    {
+        // Get Appraisal Header
+        $Appraisals = Appraisalheader::find()->where(['overview_supervisor_id' => Yii::$app->user->identity->employeeId,'goal_setting_status' => $this->goalSettingStatus('Overview') ])->all();
+        $count = 0;
+        $result = [];
+        foreach($Appraisals as $app)
+        {
+
+            $link = Html::a('View <i class="fa fa-eye"></i>', ['appraisal','app' => $app->id],['class' => 'btn btn-xs btn-success']);
+            ++$count;
+            $result['data'][] = [
+                'id' => $count,
+                'calendar' => $app->initialization->appraisalcalendar->calendar_year_description,
+                'Employee_no' => $app->employee_id,
+                'Department' => $app->initialization->department->department,
+                'link' => $link
+            ];
+        }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $result;
+    }
+
+
 
     // Appraisal Card
 
