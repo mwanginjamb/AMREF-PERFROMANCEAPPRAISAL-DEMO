@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Midyearperformancelevels */
+/* @var $model app\models\MidYearAppraisalStatus */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="midyearperformancelevels-form">
+<div class="mid-year-appraisal-status-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'level')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
 
 
 

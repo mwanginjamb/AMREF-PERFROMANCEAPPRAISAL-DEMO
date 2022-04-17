@@ -130,6 +130,7 @@ class Appraisalheader extends \yii\db\ActiveRecord
         return $this->hasOne(Employee::class,['employee_no' => 'employee_id' ]);
     }
 
+
     public function getSupervisor()
     {
         return $this->hasOne(Employee::class,['employee_no' => 'supervisor_id' ]);
@@ -138,6 +139,21 @@ class Appraisalheader extends \yii\db\ActiveRecord
     public function getDepartmentalobjectives()
     {
         return $this->hasMany(Departmentgoal::class,['departmentid' => 'appraisee_department']);
+    }
+
+    public function isAppraisee()
+    {
+        return $this->employee_id == Yii::$app->identity->employee->employee_id;
+    }
+
+    public function isSupervisor()
+    {
+        return $this->supervisor_id == Yii::$app->identity->employee->employee_id;
+    }
+
+    public function isOverview()
+    {
+        return $this->overview_supervisor_id == Yii::$app->identity->employee->employee_id;
     }
 
 }

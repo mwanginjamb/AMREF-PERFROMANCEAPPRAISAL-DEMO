@@ -14,6 +14,7 @@ class User extends ActiveRecord implements IdentityInterface
     public $password;
     public $authKey;
     public $accessToken;
+    public $employee_id;
 
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;//revert to 9 on prod
@@ -202,12 +203,9 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getEmployee(){
 
-        return Employee::findOne(['userid' => $this->getId()]);
+        return Employee::findOne(['employee_no' => 'employee_id']);
 
     }
 
-    public function isSupervisor()
-    {
-        return false;
-    }
+
 }

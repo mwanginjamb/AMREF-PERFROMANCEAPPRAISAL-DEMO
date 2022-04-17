@@ -393,7 +393,7 @@ $absoluteUrl = \yii\helpers\Url::home(true);
 <!--end Aprroval Management-->
 
 
-                        <li class="nav-item has-treeview  <?= Yii::$app->recruitment->currentCtrl(['leave','leavestatement','leaverecall','leaveplan'])?'menu-open':'' ?>">
+                        <li class="nav-item has-treeview  <?= Yii::$app->recruitment->currentCtrl(['goal-setting-appraisal-status','mid-year-appraisal-status','end-year-appraisal-status','leaveplan'])?'menu-open':'' ?>">
                             <a href="#" class="nav-link <?= Yii::$app->recruitment->currentCtrl('leave')?'active':'' ?>">
                                 <i class="nav-icon fas fa-chess-rook"></i>
                                 <p>
@@ -502,6 +502,27 @@ $absoluteUrl = \yii\helpers\Url::home(true);
                                     <a href="<?= $absoluteUrl ?>midyearperformancelevels" class="nav-link <?= Yii::$app->recruitment->currentaction('leave','create')?'active':'' ?> " title="Mid Year Performance Levels">
                                         <i class="fa fa-chess-rook nav-icon"></i>
                                         <p>Performance Levels</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="<?= $absoluteUrl ?>goal-setting-appraisal-status" class="nav-link <?= Yii::$app->recruitment->currentaction('goal-setting-appraisal-status','index')?'active':'' ?> " title="Mid Year Performance Levels">
+                                        <i class="fa fa-chess-rook nav-icon"></i>
+                                        <p>Goal Setting Status</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="<?= $absoluteUrl ?>mid-year-appraisal-status" class="nav-link <?= Yii::$app->recruitment->currentaction('mid-year-appraisal-status','index')?'active':'' ?> " title="Mid Year Performance Levels">
+                                        <i class="fa fa-chess-rook nav-icon"></i>
+                                        <p>Mid Year Appraisal Status</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="<?= $absoluteUrl ?>end-year-appraisal-status" class="nav-link <?= Yii::$app->recruitment->currentaction('end-year-appraisal-status','index')?'active':'' ?> " title="Mid Year Performance Levels">
+                                        <i class="fa fa-chess-rook nav-icon"></i>
+                                        <p>End Year Appraisal Status</p>
                                     </a>
                                 </li>
 

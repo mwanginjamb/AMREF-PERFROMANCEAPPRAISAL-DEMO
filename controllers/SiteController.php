@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Appraisalheader;
 use app\models\AppraisalStatus;
+use app\models\GoalSettingAppraisalStatus;
 use app\models\Midyearperformancelevels;
 use app\models\ObjectiveSettingStatus;
 use app\models\ResetPasswordForm;
@@ -38,7 +39,7 @@ class SiteController extends Controller
                 'only' => ['logout','index','list','appraisal'],
                 'rules' => [
                     [
-                        'actions' => ['logout','index','list','appraisal'],
+                        'actions' => ['logout','index','list','appraisal','submit'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -305,6 +306,32 @@ class SiteController extends Controller
             'appraisalStatus' => $appraisalStatus,
             'myPls' => $myPls
         ]);
+    }
+
+    public function goalSettingStatus($status)
+    {
+        $status =  GoalSettingAppraisalStatus::findOne(['status' => $status]);
+        return $status->id;
+    }
+
+    // Submit Objectives for Approval
+
+    public function actionSubmit()
+    {
+
+        $appraisal = Appraisalheader::findOne(['id' => Yii::$app->request->post('appraisalNo')]);
+        if($appraisal)
+        {
+            $appraisal->goal_setting_status = $this->goalSettingStatus('Supervisor');
+            if($appraisal->save())
+            {
+                Yii::$app->session->setFlash('success','Appraisal Objectives Submitted Successfully.');
+                return $this->redirect(['index']);
+            }else{
+                Yii::$app->session->setFlash('error','Could not Submitted Objectives Successfully :- '.$appraisal->errors[0]);
+                return $this->redirect(['index']);
+            }
+        }
     }
 
 

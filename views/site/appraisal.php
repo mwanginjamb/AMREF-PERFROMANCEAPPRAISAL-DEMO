@@ -21,13 +21,7 @@ Yii::$app->session->set('EY_Appraisal_Status',$model->ey_status);
 
 <!--    Action Buttons-->
 
-    <?= Html::a('<i class="fas fa-forward"></i> submit',['submit','appraisalNo'=> $model->id,'employeeNo' => $model->employee_id],['class' => 'btn btn-app','data' => [
-        'confirm' => 'Are you sure you want to submit this appraisal?',
-        'method' => 'post',
-    ],
-        'title' => 'Submit Goals for Approval'
-
-    ]) ?>
+<?php $this->render('_actions', ['model' => $model])?>
 
 <!--    / Action Buttons-->
 
