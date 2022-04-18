@@ -18,7 +18,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $passwordconfirm;
-    public $employee_id;
+    public $employee_no;
 
 
     /**
@@ -38,10 +38,12 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
 
-            ['employee_id', 'string'],
-            ['employee_id', 'required'],
-            ['employee_id', 'trim'],
-            ['employee_id', 'validateEmployee'],
+            ['employee_no', 'string'],
+            ['employee_no', 'required'],
+            ['employee_no', 'trim'],
+            ['employee_no', 'exist', 'targetClass' => '\app\models\Employee', 'message' => 'Provided Employee Number is Invalid.'],
+
+
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -49,14 +51,7 @@ class SignupForm extends Model
         ];
     }
 
-    public function validateEmployee($model, $attribute)
-    {
-        $res = Employee::findOne(['employee_no' => $model->employee_id]);
-        if(!$res)
-        {
-           return $this->addError($attribute,'The employee number entered is not associated to any employee in the organization.');
-        }
-    }
+
 
     /**
      * Signs user up.

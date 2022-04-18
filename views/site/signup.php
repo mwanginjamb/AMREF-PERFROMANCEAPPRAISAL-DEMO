@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
 
             <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email'])->label(false) ?>
-            <?= $form->field($model, 'employee_id')->textInput(['placeholder' => 'Employee No.'])->label(false) ?>
+            <?= $form->field($model, 'employee_no')->textInput(['placeholder' => 'Employee No.'])->label(false) ?>
 
             <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false) ?>
 
